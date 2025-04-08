@@ -1,44 +1,35 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
+/* Стили для модального окна */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Остается на месте */
+    z-index: 1; /* На переднем плане */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включает прокрутку при необходимости */
+    background-color: rgb(0,0,0); /* Черный фон с прозрачностью */
+    background-color: rgba(0,0,0,0.4); /* Черный фон с прозрачностью */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% сверху и центрирование */
     padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ширина модального окна */
 }
 
-header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    text-align: center;
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-h1 {
-    margin: 0;
-}
-
-nav {
-    margin-top: 10px;
-}
-
-nav a {
-    color: white;
+.close:hover,
+.close:focus {
+    color: black;
     text-decoration: none;
-    margin: 0 10px;
-}
-
-.container {
-    max-width: 800px;
-    margin: auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    text-decoration: none;
+    cursor: pointer;
 }
