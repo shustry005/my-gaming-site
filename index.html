@@ -3,122 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Игровой Сайт</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Подключаем общий стиль -->
-</head>
-<<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя игра</title>
+    <title>Lucky Jet Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             background-color: #f0f0f0;
         }
-        #game {
-            margin: 20px auto;
-            width: 300px;
-            height: 300px;
-            border: 2px solid #333;
-            position: relative;
-            overflow: hidden;
-        }
-        #jet {
-            width: 50px;
-            height: 50px;
-            background-color: red;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        #startButton {
-            margin-top: 20px;
+        canvas {
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-<h1>Простая игра</h1>
-<div id="game">
-    <div id="jet"></div>
-</div>
-<button id="startButton">Начать игру</button>
-<p id="message"></p>
+        let balance = 100.0; // Начальный баланс
+        let betAmount = 10.0; // Сумма ставки
+        let multiplier = 1.0;
+        let jetSpeed = Math.random() * (3.5 - 1.5) + 1.5; // Скорость "джета"
+        let jetPosition = -50; // Начальная позиция "джета"
+        let gameActive = false;
 
-<script>
-    let jet = document.getElementById('jet');
-    let game = document.getElementById('game');
-    let message = document.getElementById('message');
-    let isFlying = false;
+        function drawText(text, x, y) {
+            ctx.fillStyle = 'black';
+            ctx.font = '36px Arial';
+            ctx.fillText(text, x, y);
+        }
 
-    document.getElementById('startButton').addEventListener('click', function() {
-        if (isFlying) return;
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        isFlying = true;
-        message.textContent = "Игра началась!";
+            drawText(`Баланс: $${balance.toFixed(2)}`, 20, 40);
+            drawText(`Ставка: $${betAmount.toFixed(2)}`, 20, 80);
+            drawText(`Множитель: ${multiplier.toFixed(2)}`, canvas.width / 2 - 100, canvas.height / 2 - 30);
 
-        let height = 0; // Высота полета
-        let interval = setInterval(function() {
-            if (height >= 250) { // Максимальная высота
-                clearInterval(interval);
-                message.textContent = "Вы достигли максимальной высоты!";
-                isFlying = false;
-                return;
+            if (gameActive) {
+                if (jetPosition < canvas.width) {
+                    jetPosition += jetSpeed;
+                    multiplier += 0.01;
+                }
+
+                ctx.fillStyle = multiplier > 1 ? 'green' : 'red';
+                ctx.fillRect(jetPosition - 20, canvas.height / 2 - 10, 40, 20);
+
+                if (jetPosition >= canvas.width) { // Если джет улетел за пределы экрана
+                    gameActive = false;
+                    balance -= betAmount; // Игрок проигрывает ставку
+                }
             }
 
-            height += 5; // Увеличиваем высоту
-            jet.style.bottom = height + 'px';
-        }, 100);
-    });
-</script>
+            requestAnimationFrame(gameLoop);
+        }
 
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' && !gameActive) { // Нажмите пробел для начала игры
+                if (balance >= betAmount) {
+                    gameActive = true;
+                    jetPosition = -50; // Сброс позиции "джета"
+                    multiplier = 1.0; // Сброс множителя
+                    jetSpeed = Math.random() * (3.5 - 1.5) + 1.5; // Новая скорость джета
+                }
+            }
+
+            if (event.code === 'Enter' && gameActive) { // Нажмите Enter для остановки "джета"
+                const winnings = betAmount * multiplier;
+                balance += winnings; // Игрок выигрывает ставку умноженную на множитель
+                console.log(`Выигрыш: $${winnings.toFixed(2)}`);
+                setTimeout(() => { gameActive = false; }, 2000); // Задержка перед перезапуском игры
+            }
+        });
+
+        gameLoop();
+    </script>
 </body>
-</html>>
-    <header>
-        <h1>Добро пожаловать на Мой Игровой Сайт</h1>
-        <nav>
-            <a href="index.html">Главная</a>
-            <a href="games.html">Игры</a>
-            <a href="about.html">О нас</a>
-            <button id="registerBtn">Регистрация</button> <!-- Кнопка регистрации -->
-        </nav>
-    </header>
-    <div class="container">
-        <h2>Рейтинг игроков</h2>
-        <ul id="ratingList">
-            <!-- Здесь будет список игроков -->
-        </ul>
-
-        <h2>Игры</h2>
-        <ul>
-            <li><a href="#">Игра 1</a></li>
-            <li><a href="#">Игра 2</a></li>
-            <li><a href="#">Игра 3</a></li>
-        </ul>
-    </div>
-
-    <!-- Модальное окно для регистрации -->
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Регистрация</h2>
-            <form id="registrationForm">
-                <label for="username">Имя пользователя:</label><br>
-                <input type="text" id="username" name="username" required><br><br>
-
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" required><br><br>
-
-                <input type="submit" value="Зарегистрироваться">
-            </form>
-        </div>
-    </div>
-
-    <!-- Подключаем JavaScript -->
-    <script src="script.js"></script> 
-</body>
-</html>
+</html> 
