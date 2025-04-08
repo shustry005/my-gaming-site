@@ -6,7 +6,78 @@
     <title>Мой Игровой Сайт</title>
     <link rel="stylesheet" href="styles.css"> <!-- Подключаем общий стиль -->
 </head>
+<<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя игра</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        #game {
+            margin: 20px auto;
+            width: 300px;
+            height: 300px;
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        #jet {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #startButton {
+            margin-top: 20px;
+        }
+    </style>
+</head>
 <body>
+
+<h1>Простая игра</h1>
+<div id="game">
+    <div id="jet"></div>
+</div>
+<button id="startButton">Начать игру</button>
+<p id="message"></p>
+
+<script>
+    let jet = document.getElementById('jet');
+    let game = document.getElementById('game');
+    let message = document.getElementById('message');
+    let isFlying = false;
+
+    document.getElementById('startButton').addEventListener('click', function() {
+        if (isFlying) return;
+
+        isFlying = true;
+        message.textContent = "Игра началась!";
+
+        let height = 0; // Высота полета
+        let interval = setInterval(function() {
+            if (height >= 250) { // Максимальная высота
+                clearInterval(interval);
+                message.textContent = "Вы достигли максимальной высоты!";
+                isFlying = false;
+                return;
+            }
+
+            height += 5; // Увеличиваем высоту
+            jet.style.bottom = height + 'px';
+        }, 100);
+    });
+</script>
+
+</body>
+</html>>
     <header>
         <h1>Добро пожаловать на Мой Игровой Сайт</h1>
         <nav>
