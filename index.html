@@ -4,48 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой Игровой Сайт</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- Подключаем общий стиль -->
 </head>
 <body>
     <header>
-        <h1>Добро пожаловать на мой игровой сайт!</h1>
+        <h1>Добро пожаловать на Мой Игровой Сайт</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="games.html">Игры</a>
+            <a href="about.html">О нас</a>
+            <button id="registerBtn">Регистрация</button> <!-- Кнопка регистрации -->
+        </nav>
     </header>
     <div class="container">
+        <h2>Рейтинг игроков</h2>
+        <ul id="ratingList">
+            <!-- Здесь будет список игроков -->
+        </ul>
+
         <h2>Игры</h2>
-        <p>Здесь вы можете играть в различные игры и зарабатывать призы!</p>
-        <a href="#" class="button">Начать играть</a>
+        <ul>
+            <li><a href="#">Игра 1</a></li>
+            <li><a href="#">Игра 2</a></li>
+            <li><a href="#">Игра 3</a></li>
+        </ul>
     </div>
+
+    <!-- Модальное окно для регистрации -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registrationForm">
+                <label for="username">Имя пользователя:</label><br>
+                <input type="text" id="username" name="username" required><br><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <input type="submit" value="Зарегистрироваться">
+            </form>
+        </div>
+    </div>
+
+    <!-- Подключаем JavaScript -->
+    <script src="script.js"></script> 
 </body>
 </html>
